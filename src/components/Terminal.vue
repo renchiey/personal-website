@@ -11,9 +11,9 @@
         </div>
       </div>
 
-      <div>
-        <span class="terminal-path">{{ path }}</span>
-        <span id="terminal-input" class="terminal-text terminal-line">
+      <div class="terminal-line">
+        <span id="terminal-input" class="terminal-text">
+          <span class="terminal-path">{{ path }}</span>
           <span
             v-for="(char, index) in input"
             :key="index"
@@ -43,13 +43,35 @@ import { ref, onMounted, onUnmounted, nextTick } from "vue";
 const initialPrompt =
   "Hello! Welcome to my interactive personal website :D \n\nYou can start by entering 'help' into the command line\n";
 
-const path = "Guest@terminal:~ ❯";
+const path = "Guest@RenchieSite:~ ❯";
 const input = ref("");
 const history = ref<{ path: string; text: string }[]>([
   { path: "", text: initialPrompt },
 ]);
 const caretPosition = ref(0);
 const caretStyle = ref("text-caret");
+
+const commands: CommandsInterface = {
+  help: {
+    help: "\tUsage: help\n\n\tDescription: Displays all available commands and how to use them",
+    method: () => showHelp(),
+  },
+  clear: {
+    help: "\tUsage: clear\n\n\tDescription: Clears the terminal buffer",
+    method: (c) => clearTerminal(c),
+  },
+};
+
+function showHelp() {
+  history.value.push({
+    path: "",
+    text: Object.entries(commands).reduce((acc, [key, val]) => {
+      acc += `${key}:\n${val.help}\n`;
+
+      return acc;
+    }, ""),
+  });
+}
 
 function setCaret(index: number) {
   caretPosition.value = index;
@@ -134,12 +156,10 @@ function onKeydown(event: KeyboardEvent) {
 }
 
 function onMouseDown(event: MouseEvent) {
-  console.log(event.target);
   caretStyle.value = "";
 }
 
 function toggleCaret() {
-  console.log(window.getSelection()?.toString());
   if (window.getSelection()?.toString()) {
     caretStyle.value = "";
   } else {
@@ -186,12 +206,40 @@ function bulkDelete() {
 }
 
 function onEnter() {
+  const command = input.value.split(" ");
+
+  console.log(command);
+
   history.value.push({
     path,
     text: input.value,
   });
+
+  if (command.length > 0) {
+    const app = command[0].trim();
+
+    let cmd = commands[app];
+
+    if (cmd) {
+      cmd.method(command);
+    }
+  }
+
   input.value = "";
   caretPosition.value = 0;
+}
+
+function clearTerminal(cmd: string[]) {
+  if (cmd.length > 1) {
+    history.value.push({
+      path,
+      text:
+        input.value +
+        "\nUsage: clear\n\nDescription: Clears the terminal buffer\n",
+    });
+  } else {
+    history.value = [];
+  }
 }
 
 onMounted(() => {
@@ -208,41 +256,110 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+/* ===== Text selection ===== */
 ::selection {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
   color: white;
 }
 
+/* ===== Font ===== */
 @font-face {
   font-family: "JetbrainsMono";
   src: url("/fonts/JetBrainsMono-Regular.woff2") format("woff2");
   font-display: swap;
 }
 
+/* ===== Terminal container ===== */
 #terminal-container {
+  position: relative;
   width: 100%;
   height: 95vh;
   margin-top: 10px;
-  position: relative;
   max-width: 900px;
   max-height: 1200px;
-  border-radius: 10px;
+
   font-family: "JetbrainsMono", monospace;
+  color: white;
+
   border-radius: 10px;
   border: 2px solid rgba(0, 0, 0, 0.5);
+
   opacity: 70%;
-  background: linear-gradient(
-    343deg,
-    rgba(186, 186, 186, 1) -20%,
-    rgba(230, 230, 230, 1) 10%
-  );
-  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(10px);
+
   overflow-y: auto;
   overflow-x: hidden;
+  box-sizing: border-box;
+
+  /* Glass + CRT base */
+  background: radial-gradient(
+    ellipse at center,
+    rgba(30, 30, 30, 0.3) 0%,
+    rgba(10, 10, 10, 0.45) 50%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+
+  backdrop-filter: blur(10px);
+
+  /* CRT softness */
+  filter: blur(0.2px) contrast(1.05) saturate(1.2);
 }
 
-/* ===== Chrome, Edge, Safari ===== */
+/* ===== CRT overlays ===== */
+#terminal-container::before,
+#terminal-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Scanlines */
+#terminal-container::before {
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.18) 0px,
+    rgba(0, 0, 0, 0.18) 1px,
+    rgba(0, 0, 0, 0) 3px,
+    rgba(0, 0, 0, 0) 4px
+  );
+  mix-blend-mode: multiply;
+}
+
+/* Noise + phosphor mask */
+#terminal-container::after {
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 0, 0, 0.035),
+      rgba(255, 0, 0, 0.035) 1px,
+      rgba(0, 255, 0, 0.02) 2px,
+      rgba(0, 0, 255, 0.035) 3px
+    ),
+    url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'>\
+<filter id='n'>\
+<feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/>\
+</filter>\
+<rect width='100%' height='100%' filter='url(%23n)' opacity='0.04'/>\
+</svg>");
+  animation: crt-flicker 0.15s infinite;
+}
+
+/* ===== Flicker animation ===== */
+@keyframes crt-flicker {
+  0% {
+    opacity: 0.92;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.94;
+  }
+}
+
+/* ===== Scrollbar ===== */
 #terminal-container::-webkit-scrollbar {
   width: 8px;
 }
@@ -252,41 +369,53 @@ onUnmounted(() => {
 }
 
 #terminal-container::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.35);
+  background-color: rgba(255, 255, 255, 0.25);
   border-radius: 8px;
 }
 
 #terminal-container::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(0, 0, 0, 0.55);
+  background-color: rgba(255, 255, 255, 0.45);
 }
 
-/* ===== Firefox ===== */
 #terminal-container {
   scrollbar-width: thin;
-  scrollbar-color: rgba(0, 0, 0, 0.35) transparent;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
 }
 
+/* ===== Content ===== */
 #terminal-content {
+  position: relative;
   z-index: 2;
   padding: 20px;
 }
 
+/* ===== Text rendering ===== */
+
 .terminal-text {
+  flex: 1;
   white-space: pre-wrap;
-  word-break: break-word;
+  word-break: break-all;
   overflow-wrap: anywhere;
+  text-shadow:
+    0 0 2px rgba(0, 255, 0, 0.6),
+    0 0 8px rgba(0, 255, 0, 0.4),
+    0 0 16px rgba(0, 255, 0, 0.25);
 }
 
 .terminal-path {
-  color: blue;
+  color: #37e64b;
   margin-right: 10px;
+  text-shadow:
+    0 0 4px rgba(55, 230, 75, 0.8),
+    0 0 12px rgba(55, 230, 75, 0.5);
 }
 
+/* ===== Line & character cells ===== */
 .terminal-line {
-  white-space: pre-wrap;
-  display: inline-flex;
+  display: flex;
   flex-wrap: wrap;
-  font-family: "JetbrainsMono", monospace;
+  width: 100%;
+  max-width: 100%;
 }
 
 .char-cell {
@@ -296,21 +425,15 @@ onUnmounted(() => {
   display: inline-block;
 }
 
-.invert-char {
-  color: white;
-}
-
+/* ===== Block caret ===== */
 .block-caret {
   position: absolute;
   inset: 0;
-  height: 1.3em;
-  background: black;
-  z-index: -1;
-  opacity: 0.8;
+  height: 1.4em;
+  background: white;
+  opacity: 0.85;
+  mix-blend-mode: difference;
   pointer-events: none;
-}
-
-.end-caret {
   animation: caret-blink 1s steps(1) infinite;
 }
 
