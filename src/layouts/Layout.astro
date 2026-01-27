@@ -1,3 +1,7 @@
+---
+import Header from "../components/Header.vue";
+---
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -9,19 +13,147 @@
     <title>Renchie</title>
   </head>
   <body>
-    <slot />
+    <Header />
+    <main class="page-content">
+      <slot />
+    </main>
+    <footer>© 2026 Renchie Yang. All rights reserved.</footer>
   </body>
 </html>
 
 <style>
+  @font-face {
+    font-family: "JetbrainsMono";
+    src: url("/fonts/JetBrainsMono-Regular.woff2") format("woff2");
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "JetbrainsMonoBold";
+    src: url("/fonts/JetBrainsMono-Bold.woff2") format("woff2");
+    font-family: swap;
+  }
+
   html,
   body {
-    display: flex;
-    justify-content: center;
     margin: 0;
     width: 100%;
-    background: #3c3b40;
-    z-index: -10;
-    height: 100%;
+    min-height: 100vh;
+    background-color: gray;
+    animation: textflicker 0.03s infinite alternate;
+  }
+
+  /* Base CRT background */
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    overflow-x: hidden;
+
+    font-family: "JetbrainsMono", monospace;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(30, 30, 30, 0.5) 0%,
+      rgba(10, 10, 10, 0.6) 60%,
+      rgba(0, 0, 0, 0.7) 100%
+    );
+
+    color: white;
+  }
+
+  /* ===== Scanlines ===== */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9998;
+
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.18) 0px,
+      rgba(0, 0, 0, 0.18) 1px,
+      rgba(0, 0, 0, 0) 3px,
+      rgba(0, 0, 0, 0) 4px
+    );
+
+    mix-blend-mode: multiply;
+  }
+
+  /* ===== Raster scan ===== */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.12) 48%,
+      rgba(255, 255, 255, 0.25) 50%,
+      rgba(255, 255, 255, 0.12) 52%,
+      rgba(255, 255, 255, 0) 100%
+    );
+
+    background-size: 100% 120px;
+    background-repeat: no-repeat;
+
+    animation: raster-scan 4s ease-in-out infinite;
+    opacity: 0.6;
+  }
+
+  .page-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+
+    width: 100%;
+    max-width: 960px;
+    min-height: 0;
+  }
+
+  footer {
+    margin-bottom: 20px;
+  }
+
+  @keyframes textflicker {
+    from {
+      text-shadow:
+        1px 0 0 #ea36af,
+        -2px 0 0 #75fa69;
+    }
+    to {
+      text-shadow:
+        2px 0.5px 2px #ea36af,
+        -1px -0.5px 2px #75fa69;
+    }
+  }
+
+  /* ===== Raster animation ===== */
+  @keyframes raster-scan {
+    0% {
+      background-position: 0 -150px;
+      opacity: 0;
+    }
+
+    10%,
+    90% {
+      opacity: 0.6;
+    }
+
+    100% {
+      background-position: 0 calc(100% + 150px);
+      opacity: 0;
+    }
+  }
+
+  /* ===== Text selection ===== */
+  ::selection {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
   }
 </style>

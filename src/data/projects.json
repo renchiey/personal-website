@@ -1,0 +1,31 @@
+[
+  {
+    "id": "mafia-card-game",
+    "title": "Mafia Card Game",
+    "description": "An online multiplayer version of the Mafia card game with real-time interactions.",
+    "link": null,
+    "repo": "https://github.com/renchiey/mafia-game-online",
+    "techStack": [
+      "TypeScript",
+      "React",
+      "Node.js",
+      "WebSockets",
+      "Tailwind CSS"
+    ],
+    "thumbnail": "https://example.com/thumbnails/mafia-game.png"
+  },
+  {
+    "id": "personal-site",
+    "title": "Personal Website",
+    "description": "My personal portfolio and playground for experimenting with UI and effects.",
+    "link": "https://renchie.dev",
+    "repo": "https://github.com/renchiey/personal-site",
+    "techStack": [
+      "Astro",
+      "Vue",
+      "TypeScript",
+      "CSS"
+    ],
+    "thumbnail": null
+  }
+]

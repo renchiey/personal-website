@@ -1,0 +1,112 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Book from "../../components/Book.astro";
+
+import { getCollection } from "astro:content";
+
+const completed = await getCollection("completed");
+const inProgress = await getCollection("inProgress");
+const notCompleted = await getCollection("notCompleted");
+---
+
+<Layout>
+  <section class="readings-page">
+    <h1>My Readings</h1>
+    <hr />
+
+    <div class="readings-container">
+      <div class="reading-section">
+        <h2 id="in-progress-title">In Progress</h2>
+
+        {inProgress.length === 0 && <p>No books yet.</p>}
+
+        <div class="books-container">
+          {
+            inProgress.map((book) => (
+              <Book
+                title={book.data.title}
+                author={book.data.author}
+                rating={book.data.rating}
+                coverImgSrc={book.data.coverImgSrc}
+              />
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="reading-section">
+        <h2 id="completed-title">Completed</h2>
+
+        {completed.length === 0 && <p>No books yet.</p>}
+
+        <div class="books-container">
+          {
+            completed.map((book) => (
+              <Book
+                title={book.data.title}
+                author={book.data.author}
+                rating={book.data.rating}
+                thoughts={book.data.thoughts}
+                recommend={book.data.recommend}
+                coverImgSrc={book.data.coverImgSrc}
+              />
+            ))
+          }
+        </div>
+      </div>
+    </div>
+    <div class="reading-section">
+      <h2 id="not-completed-title">Did Not Finish</h2>
+
+      {notCompleted.length === 0 && <p>No books yet.</p>}
+
+      <div class="books-container">
+        {
+          notCompleted.map((book) => (
+            <Book
+              title={book.data.title}
+              author={book.data.author}
+              rating={book.data.rating}
+              thoughts={book.data.thoughts}
+              recommend={book.data.recommend}
+              coverImgSrc={book.data.coverImgSrc}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Layout>
+<style>
+  #in-progress-title {
+    color: rgba(252, 186, 3);
+    text-shadow: 
+      0 0 4px rgba(252, 186, 3,0.8);
+      0 0 12px rgba(252, 186, 3, 0.5)
+  }
+
+  #completed-title {
+    color: rgba(76, 230, 62);
+    text-shadow:
+      0 0 4px rgba(76, 230, 62, 0.8),
+      0 0 12px rgba(76, 230, 62, 0.5);
+  }
+
+  #not-completed-title {
+    color: rgb(230, 76, 76);
+    text-shadow:
+      0 0 4px rgba(230, 76, 76, 0.9),
+      0 0 12px rgba(230, 76, 76, 0.6),
+      0 0 18px rgba(230, 76, 76, 0.3);
+  }
+
+  .reading-section {
+    margin-bottom: 50px;
+  }
+
+  .books-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+</style>

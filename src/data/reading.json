@@ -1,0 +1,73 @@
+
+{
+  "completed": [
+    {
+      "id": "the-book-thief",
+      "title": "The Book Thief",
+      "author": "Markus Zusak",
+      "thoughts": "Depressing, but good... 🙁",
+      "coverImgSrc": "https://m.media-amazon.com/images/I/914cHl9v7oL._AC_UF1000,1000_QL80_.jpg",
+      "rating": 4.9,
+      "recommend": true
+    },
+    {
+      "id": "atomic-habits",
+      "title": "Atomic Habits",
+      "author": "James Clear",
+      "coverImgSrc": "https://m.media-amazon.com/images/I/81kg51XRc1L._AC_UF350,350_QL50_.jpg",
+      "thoughts": "The quintessential self-improvment book. Definitely one of those books you read to make yourself feel productive",
+      "rating": 3.5,
+      "recommend": false
+    },
+    {
+      "id": "1984",
+      "title": "1984",
+      "author": "George Orwell",
+      "coverImgSrc": "https://m.media-amazon.com/images/I/81qZ5kGMQ1L._AC_UF1000,1000_QL80_.jpg",
+      "thoughts": "Very grim, but a must read",
+      "rating": 4.4,
+      "recommend": true
+    },
+    {
+      "id": "subtle-art-of-not-giving-an-f",
+      "title": "The Subtle Art of Not Giving a F*ck",
+      "author": "Mark Manson",
+      "coverImgSrc": "https://m.media-amazon.com/images/I/81W-pu5en1L._AC_UF1000,1000_QL80_.jpg",
+      "thoughts": "Not for everyone, but insightful for sure",
+      "rating": 4.0
+    },
+    {
+      "id": "cant-hurt-me",
+      "title": "Can't Hurt Me",
+      "author": "David Goggins",
+      "coverImgSrc": "https://m.media-amazon.com/images/I/61bFMJQvmrL.jpg",
+      "thoughts": "Inspiring",
+      "rating": 4.2,
+      "recommend": true
+    }
+  ],
+  "inProgress": [
+    {
+      "id": "dune",
+      "title": "Dune",
+      "author": "Frank Herbert",
+      "coverImgSrc": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRU_su8Vg1VyPB3Y8Qf4Bd3buUoM8x_c1Agr9zH8uXjaI0VOGNZcyPuKTJlcb4OkxRaeSvEU5P8lyUSJDQL63So94O0yPDA1MsBYrjAlQ&s=10"
+    },
+    {
+      "id": "remember",
+      "title": "Remember: The Science of Memory and the Art of Forgetting",
+      "author": "Lisa Genova",
+      "coverImgSrc": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThzifh_EQw29erVGDIiA0gBCkgioJFBtjUQw&s"
+    }
+  ],
+  "notCompleted": [ 
+    {
+      "id": "love-for-imperfect-things",
+      "title": "Love for Imperfect Things",
+      "author": "Haemin Sunim",
+      "coverImgSrc": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSsU7KVi-1Y7Z7yaHV_uiCHtkSCN2_2O0oleTEVSwzkGJQkDx3U",
+      "thoughts": "I loved the sentiment. But a large portion of the book is just dedicated to proverbs, so it wasn't for me"
+    }
+  ]
+}
+
