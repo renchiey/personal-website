@@ -2,13 +2,20 @@
 {
   "completed": [
     {
+      "id": "fire-punch",
+      "title": "Fire Punch",
+      "author": "Tatsuki Fujimoto",
+      "thoughts": "Fujimoto cooked for this one",
+      "coverImgSrc": "https://m.media-amazon.com/images/I/91HmjQXIQ7L._UF894,1000_QL80_.jpg",
+      "rating": 5.0
+    },
+    {
       "id": "the-book-thief",
       "title": "The Book Thief",
       "author": "Markus Zusak",
       "thoughts": "Depressing, but good... 🙁",
       "coverImgSrc": "https://m.media-amazon.com/images/I/914cHl9v7oL._AC_UF1000,1000_QL80_.jpg",
-      "rating": 4.9,
-      "recommend": true
+      "rating": 5.0
     },
     {
       "id": "atomic-habits",
@@ -16,8 +23,7 @@
       "author": "James Clear",
       "coverImgSrc": "https://m.media-amazon.com/images/I/81kg51XRc1L._AC_UF350,350_QL50_.jpg",
       "thoughts": "The quintessential self-improvment book. Definitely one of those books you read to make yourself feel productive",
-      "rating": 3.5,
-      "recommend": false
+      "rating": 3.5
     },
     {
       "id": "1984",
@@ -25,16 +31,23 @@
       "author": "George Orwell",
       "coverImgSrc": "https://m.media-amazon.com/images/I/81qZ5kGMQ1L._AC_UF1000,1000_QL80_.jpg",
       "thoughts": "Very grim, but a must read",
-      "rating": 4.4,
-      "recommend": true
+      "rating": 4.4
     },
     {
       "id": "subtle-art-of-not-giving-an-f",
       "title": "The Subtle Art of Not Giving a F*ck",
       "author": "Mark Manson",
       "coverImgSrc": "https://m.media-amazon.com/images/I/81W-pu5en1L._AC_UF1000,1000_QL80_.jpg",
-      "thoughts": "Not for everyone, but insightful for sure",
+      "thoughts": "There are some valuable insights in this for sure",
       "rating": 4.0
+    },
+    {
+      "id": "chainsaw-man",
+      "title": "Chainsaw Man: Part 1",
+      "author": "Tatsuki Fujimoto",
+      "coverImgSrc": "https://m.media-amazon.com/images/I/81s8xJUzWGL._AC_UF350,350_QL50_.jpg",
+      "rating": 5.0,
+      "thoughts": "PEAKKK"
     },
     {
       "id": "cant-hurt-me",
@@ -42,8 +55,7 @@
       "author": "David Goggins",
       "coverImgSrc": "https://m.media-amazon.com/images/I/61bFMJQvmrL.jpg",
       "thoughts": "Inspiring",
-      "rating": 4.2,
-      "recommend": true
+      "rating": 4.2
     }
   ],
   "inProgress": [

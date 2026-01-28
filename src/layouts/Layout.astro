@@ -13,7 +13,7 @@ import Header from "../components/Header.vue";
     <title>Renchie</title>
   </head>
   <body>
-    <Header />
+    <Header client:load />
     <main class="page-content">
       <slot />
     </main>
@@ -109,7 +109,8 @@ import Header from "../components/Header.vue";
   .page-content {
     flex: 1;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 
     width: 100%;
     max-width: 960px;
@@ -118,6 +119,7 @@ import Header from "../components/Header.vue";
 
   footer {
     margin-bottom: 20px;
+    text-align: center;
   }
 
   @keyframes textflicker {

@@ -8,7 +8,6 @@ const bookSchema = z.object({
   coverImgSrc: z.string().nullable(),
   rating: z.number().optional(),
   thoughts: z.string().optional(),
-  recommend: z.boolean().optional(),
 });
 
 const ProjectSchema = z.object({

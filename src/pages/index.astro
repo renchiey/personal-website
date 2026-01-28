@@ -1,9 +1,102 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import CrtImage from "../components/CrtImage.astro";
+import myImage from "../assets/me.jpg";
 ---
 
 <Layout>
-  <div>hi</div>
+  <section class="hero-section">
+    <div class="hero-text">
+      <h1>Hey I'm Renchie!</h1>
+      <p class="typewriter">
+        <span class="ghost">
+          This is my personal website where you can find all things related to
+          me... Including, but not limited to: life updates, readings, and
+          projects! Some things to know about me is that I'm currently working
+          as a freelance software engineer, I love playing all kinds of sports,
+          and am currently learning how to play the guitar :D
+        </span>
+        <span
+          class="typed"
+          data-text="This is my personal website where you can find all things related to me... Including, but not limited to: life updates, readings, and projects!
+
+Some things to know about me is that I'm currently working as a freelance software engineer, I love playing all kinds of sports, and am currently learning how to play the guitar :D"
+        ></span>
+      </p>
+    </div>
+    <CrtImage src={myImage.src} alt="me!" width="340" height="340/" />
+  </section>
+  <hr />
+  <section></section>
 </Layout>
 
-<style></style>
+<style>
+  section {
+    width: 100%;
+
+    margin-bottom: 50px;
+  }
+
+  .hero-section {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 50px;
+    flex-wrap: wrap-reverse;
+  }
+
+  hr {
+    width: 90%;
+  }
+
+  .hero-text {
+    max-width: 520px;
+    margin-inline: 20px;
+  }
+
+  .typewriter {
+    position: relative;
+  }
+
+  .ghost {
+    visibility: hidden;
+    white-space: pre-wrap;
+  }
+
+  .typed {
+    position: absolute;
+    inset: 0;
+    white-space: pre-wrap;
+  }
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+</style>
+
+<script>
+  function typeText(el: any, speed: number) {
+    const text = el.dataset.text;
+    let i = 0;
+
+    function step() {
+      if (i < text.length) {
+        el.innerHTML += text[i] === "\n" ? "<br>" : text[i];
+        i++;
+        setTimeout(step, speed);
+      }
+    }
+
+    step();
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const typed = document.querySelectorAll(".typed");
+
+    if (typed.length) {
+      typeText(typed[0], 10);
+      setTimeout(() => typeText(typed[1], 18), 800);
+    }
+  });
+</script>
