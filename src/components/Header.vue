@@ -6,9 +6,9 @@
           v-for="option in navLinks"
           :class="{ highlight: isActive(option.href) }"
         >
-          <a :href="option.href">
+          <a class="nav-option-container" :href="option.href">
             <div class="icon" v-if="option.icon" v-html="option.icon" />
-            {{ option.label }}</a
+            <span class="nav-label"> {{ option.label }}</span></a
           >
         </li>
       </ul>
@@ -50,8 +50,8 @@ const navLinks = [
     icon: homeIcon,
   },
   {
-    label: "Reading",
-    href: "/reading",
+    label: "Bookshelf",
+    href: "/bookshelf",
     icon: bookIcon,
   },
 ];
@@ -64,6 +64,8 @@ header {
 
 nav {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .highlight {
@@ -77,7 +79,10 @@ nav {
 
 ul {
   list-style: none;
+  padding: 0;
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 30px;
   font-size: 1.2em;
   flex-wrap: wrap;
@@ -99,5 +104,17 @@ a {
   color: white;
   display: flex;
   gap: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+  .nav-label {
+    font-size: 0.7em;
+  }
+
+  .nav-option-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
 }
 </style>

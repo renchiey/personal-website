@@ -8,10 +8,13 @@ const completed = await getCollection("completed");
 const inProgress = await getCollection("inProgress");
 const notCompleted = await getCollection("notCompleted");
 ---
+<head>
+  <title>Bookshelf - renchieyang.com </title>
 
+</head>
 <Layout>
   <section class="readings-page">
-    <h1>My Readings</h1>
+    <h1>My Bookshelf</h1>
     <hr />
 
     <div class="readings-container">
@@ -47,7 +50,6 @@ const notCompleted = await getCollection("notCompleted");
                 author={book.data.author}
                 rating={book.data.rating}
                 thoughts={book.data.thoughts}
-                recommend={book.data.recommend}
                 coverImgSrc={book.data.coverImgSrc}
               />
             ))
@@ -68,7 +70,6 @@ const notCompleted = await getCollection("notCompleted");
               author={book.data.author}
               rating={book.data.rating}
               thoughts={book.data.thoughts}
-              recommend={book.data.recommend}
               coverImgSrc={book.data.coverImgSrc}
             />
           ))
@@ -83,6 +84,10 @@ const notCompleted = await getCollection("notCompleted");
     text-shadow: 
       0 0 4px rgba(252, 186, 3,0.8);
       0 0 12px rgba(252, 186, 3, 0.5)
+  }
+
+  section {
+    padding-inline: 20px;
   }
 
   #completed-title {
