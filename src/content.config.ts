@@ -1,23 +1,12 @@
 import { file } from "astro/loaders";
-import { defineCollection, z } from "astro:content";
-
-const bookSchema = z.object({
-  id: z.string().min(1),
-  title: z.string(),
-  author: z.string(),
-  coverImgSrc: z.string().nullable(),
-  rating: z.number().optional(),
-  thoughts: z.string().optional(),
-});
-
-const ProjectSchema = z.object({
-  title: z.string().min(1),
-  link: z.string().url().nullable(),
-  repo: z.string().url(),
-  description: z.string(),
-  techStack: z.array(z.string()),
-  thumbnail: z.string().url().nullable(),
-});
+import { defineCollection } from "astro:content";
+import {
+  bookSchema,
+  happeningsSchema,
+  hardwareToolSchema,
+  projectSchema,
+  softwareToolSchema,
+} from "./schemas";
 
 const completed = defineCollection({
   loader: file("src/data/reading.json", {
@@ -44,7 +33,36 @@ const projects = defineCollection({
   loader: file("src/data/projects.json", {
     parser: (text) => JSON.parse(text),
   }),
-  schema: ProjectSchema,
+  schema: projectSchema,
 });
 
-export const collections = { completed, inProgress, projects, notCompleted };
+const softwareTools = defineCollection({
+  loader: file("src/data/me.json", {
+    parser: (text) => JSON.parse(text).tools.software,
+  }),
+  schema: softwareToolSchema,
+});
+
+const hardwareTools = defineCollection({
+  loader: file("src/data/me.json", {
+    parser: (text) => JSON.parse(text).tools.hardware,
+  }),
+  schema: hardwareToolSchema,
+});
+
+const happenings = defineCollection({
+  loader: file("src/data/me.json", {
+    parser: (text) => JSON.parse(text).happenings,
+  }),
+  schema: happeningsSchema,
+});
+
+export const collections = {
+  completed,
+  inProgress,
+  projects,
+  notCompleted,
+  softwareTools,
+  hardwareTools,
+  happenings,
+};

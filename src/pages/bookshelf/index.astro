@@ -7,12 +7,12 @@ import { getCollection } from "astro:content";
 const completed = await getCollection("completed");
 const inProgress = await getCollection("inProgress");
 const notCompleted = await getCollection("notCompleted");
----
-<head>
-  <title>Bookshelf - renchieyang.com </title>
 
-</head>
-<Layout>
+// 😁 - for some reason the file encoding type will change from utf-8 without an emoji (which will prevent emojis from being rendered properly)
+---
+
+
+<Layout title="Bookshelf">
   <section class="readings-page">
     <h1>My Bookshelf</h1>
     <hr />

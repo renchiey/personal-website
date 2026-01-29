@@ -2,12 +2,22 @@
 import Layout from "../layouts/Layout.astro";
 import CrtImage from "../components/CrtImage.astro";
 import myImage from "../assets/me.jpg";
+import { getCollection } from "astro:content";
+
+const date = new Date();
+
+const updateDate = new Intl.DateTimeFormat("en-AU", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+}).format(date);
+
+const happenings = await getCollection("happenings");
+const softwareTools = await getCollection("softwareTools");
+const hardwareTools = await getCollection("hardwareTools");
 ---
 
-<head>
-  <title>Homepage - renchieyang.com</title>
-</head>
-<Layout>
+<Layout title="Homepage">
   <section class="hero-section">
     <div class="hero-text">
       <h1>Hey I'm Renchie!</h1>
@@ -16,44 +26,114 @@ import myImage from "../assets/me.jpg";
           This is my personal website where you can find all things related to
           me... Including, but not limited to: life updates, readings, and
           projects! Some things to know about me is that I'm currently working
-          as a freelance software engineer, I love playing all kinds of sports,
-          and am currently learning how to play the guitar :D
+          as a freelance software engineer, I love playing/doing all kinds of
+          sports (my favourite being Snowboarding), and I have an expensive
+          camera that I occassionaly use to shoot videos with :D
         </span>
         <span
           class="typed"
-          data-text="This is my personal website where you can find all things related to me... Including, but not limited to: life updates, readings, and projects!
+          data-text="This is my personal website where you can find all things related to me... Including, but not limited to: life updates, readings, and projects! 
 
-Some things to know about me is that I'm currently working as a freelance software engineer, I love playing all kinds of sports, and am currently learning how to play the guitar :D"
+Some things to know about me is that I'm currently working as a freelance software engineer, I love playing/doing all kinds of sports (my favourite being Snowboarding), and I have an expensive camera that I very occassionaly use to shoot videos with :D"
         ></span>
       </p>
     </div>
-    <CrtImage src={myImage.src} alt="me!" width="340" height="340/" />
+    <div class="hero-image">
+      <CrtImage src={myImage.src} alt="me!" width="340" height="340/" />
+      <p>Me at Falls Creek in 2025!</p>
+    </div>
   </section>
   <hr />
-  <section></section>
+  <section class="happenings-section">
+    <h2>What I'm Doing Now 🥸</h2>
+    <p>Last updated: {updateDate}</p>
+    <ul>
+      {happenings.map((happening) => <li>{happening.data.happening}</li>)}
+    </ul>
+  </section>
+  <section class="tools-section">
+    <h2>Tools 🪛</h2>
+    <h3>Software</h3>
+    <p>
+      This website is hosted on <a href="https://www.netlify.com/">Netlify</a> and
+      built using <a href="https://astro.build/">Astro</a> and <a
+        href="https://vuejs.org/">Vue</a
+      >
+    </p>
+    <ul class="tools">
+      {
+        softwareTools.map((tool) => (
+          <li>
+            {tool.data.type}:{" "}
+            <a class="tool" target="_blank" href={tool.data.href}>
+              {tool.data.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <h3>Hardware</h3>
+    <ul>
+      {
+        hardwareTools.map((tool) => (
+          <li>
+            <strong>{tool.data.type}</strong>:{" "}
+            {tool.data.href ? (
+              <a
+                class="tool"
+                target="_blank"
+                rel="noopener noreferrer"
+                href={tool.data.href}
+              >
+                {tool.data.label}
+              </a>
+            ) : (
+              <span>{tool.data.label}</span>
+            )}
+            {tool.data.parts && (
+              <ul>
+                {tool.data.parts.map((part) => (
+                  <li>
+                    <strong>{part.component}:</strong>{" "}
+                    {part.href ? (
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={part.href}
+                      >
+                        {part.label}
+                      </a>
+                    ) : (
+                      <span>{part.label}</span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </section>
 </Layout>
 
 <style>
   section {
     width: 100%;
-
-    margin-bottom: 50px;
+    padding-inline: 20px;
+    margin-bottom: 20px;
   }
 
   .hero-section {
     display: flex;
+    align-items: center;
     justify-content: space-evenly;
     gap: 50px;
     flex-wrap: wrap-reverse;
   }
 
-  hr {
-    width: 90%;
-  }
-
   .hero-text {
     max-width: 520px;
-    margin-inline: 20px;
   }
 
   .typewriter {
@@ -65,10 +145,49 @@ Some things to know about me is that I'm currently working as a freelance softwa
     white-space: pre-wrap;
   }
 
+  .note {
+    font-size: 0.8em;
+  }
+
   .typed {
     position: absolute;
     inset: 0;
     white-space: pre-wrap;
+  }
+
+  .hero-image p {
+    margin-top: 2px;
+    font-size: 0.9em;
+  }
+
+  .typed::after {
+    content: "█";
+    display: inline-block;
+    margin-left: 2px;
+    animation: blink 1s steps(1) infinite;
+  }
+
+  .happenings-section {
+    margin-top: 40px;
+  }
+
+  .tools-section {
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+
+  a {
+    opacity: 70%;
+    color: white;
+    text-decoration: none;
+  }
+
+  ul {
+    margin-left: -15px;
+  }
+
+  li {
+    margin-bottom: 15px;
   }
 
   @keyframes blink {

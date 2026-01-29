@@ -20,6 +20,7 @@
 import terminalIcon from "../assets/terminal.svg?raw";
 import homeIcon from "../assets/home.svg?raw";
 import bookIcon from "../assets/book.svg?raw";
+import hammerIcon from "../assets/hammer.svg?raw";
 import { onMounted, ref } from "vue";
 
 const path = ref("");
@@ -50,6 +51,11 @@ const navLinks = [
     icon: homeIcon,
   },
   {
+    label: "Projects",
+    href: "/projects",
+    icon: hammerIcon,
+  },
+  {
     label: "Bookshelf",
     href: "/bookshelf",
     icon: bookIcon,
@@ -60,6 +66,7 @@ const navLinks = [
 <style scoped>
 header {
   margin-bottom: 30px;
+  margin-inline: 10px;
 }
 
 nav {
@@ -108,7 +115,21 @@ a {
 
 @media only screen and (max-width: 600px) {
   .nav-label {
-    font-size: 0.7em;
+    display: none;
+  }
+
+  li {
+    padding: 3px 5px;
+  }
+
+  .icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .icon :deep(svg) {
+    width: 100%;
+    height: 100%;
   }
 
   .nav-option-container {

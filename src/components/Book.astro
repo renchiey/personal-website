@@ -11,7 +11,7 @@ import CrtImage from "./CrtImage.astro";
     </div>
     {rating !== undefined && <p class="book-rating">Rating: {rating}/5</p>}
 
-    {thoughts && <p>Thoughts: {thoughts}</p>}
+    {thoughts && <p>Thoughts: <span class="book-thoughts">{thoughts}</span></p>}
 
     {recommend && <span class="book-recommend">Recommended</span>}
   </div>
@@ -44,6 +44,7 @@ import CrtImage from "./CrtImage.astro";
     margin: 0;
   }
 
+
   .book-author {
     margin: 0;
     opacity: 0.6;
@@ -51,8 +52,8 @@ import CrtImage from "./CrtImage.astro";
   }
 
   .book-thoughts {
-    font-style: italic;
     opacity: 0.85;
+    font-style: italic;
   }
 
   .book-recommend {

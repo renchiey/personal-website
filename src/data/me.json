@@ -1,0 +1,101 @@
+{
+  "happenings": [
+    {
+      "id": 1,
+      "happening": "Learning how to play the guitar"
+    },
+    {
+      "id": 2,
+      "happening": "Playing modded Minecraft"
+    },
+    {
+      "id": 3,
+      "happening": "Leetcoding"
+    },
+    {
+      "id": 4,
+      "happening": "Working on webscrapers"
+    }
+  ],
+  "tools": {
+    "software": [
+      {
+        "id": 1,
+        "type": "Text Editor",
+        "label": "NeoVim (NvChad config)",
+        "href": "https://nvchad.com/"
+      },
+      {
+        "id": 2,
+        "type": "Operating System",
+        "label": "Omarchy",
+        "href": "https://omarchy.org/"
+      },
+      {
+        "id": 3,
+        "type": "Operating System",
+        "label": "MacOS",
+        "href": "https://en.wikipedia.org/wiki/MacOS"
+      }
+    ],
+    "hardware": [
+      {
+        "id": 1,
+        "type": "Laptop",
+        "label": "Apple MacBook Air M2 13\", 16GB RAM"
+      },
+      {
+        "id": 2,
+        "type": "Desktop",
+        "label": "",
+        "parts": [
+          {
+            "component": "Motherboard",
+            "label": "B550 AORUS PRO AX",
+            "href": "https://www.amazon.com.au/Gigabyte-B550-Aorus-AX-Motherboard/dp/B08T6NJ1Z1"
+          },
+          {
+            "component": "CPU",
+            "label": "AMD Ryzen 7 5700X (16) @ 4.67 GHz",
+            "href": "https://www.amazon.com.au/AMD-Ryzen-5700-16-Threads-Processor/dp/B0CQ4HPJYV?source=ps-sl-shoppingads-lpcontext&psc=1&smid=A4XRJ8S0WXSO0"
+          },
+          {
+            "component": "GPU",
+            "label": "NVIDIA GeForce RTX 5070",
+            "href": "https://www.amazon.com.au/ASUS-3-125-slot-Military-Grade-Components-Protective/dp/B0DYPGW2KB?th=1"
+          },
+          {
+            "component": "PSU",
+            "label": "Asus 750W ROG Loki SFX-L Platinum PSU",
+            "href": "https://www.amazon.com.au/ASUS-Platinum-Modular-Certified-Compatible/dp/B0BHJB4VG7?th=1"
+          }
+        ] 
+      }, 
+      {
+        "id": 3,
+        "type": "Keyboard",
+        "label": "NuPhy Gem80 Wireless (Raspberry switches)",
+        "href":"https://nuphy.com/collections/keyboards/products/gem80"
+      },
+      {
+        "id": 4,
+        "type": "Camera",
+        "label": "Sony Alpha ZV-E1 Full-Frame",
+        "href": "https://www.amazon.com.au/Sony-Full-Frame-Interchangeable-Mirrorless-Camera/dp/B0BZWNWCZ9?th=1"
+      },  
+      {
+        "id": 5,
+        "type": "Mouse",
+        "label": "Logitech MX Master 3S",
+        "href": "https://www.amazon.com.au/Logitech-MX-Master-3S-Performance/dp/B0B11LJ69K?th=1"
+      },
+      {
+        "id": 6,
+        "type": "EReader",
+        "label": "Kobo Libra 2",
+        "href": "https://www.amazon.com.au/Kobo-Waterproof-Touchscreen-Glare-Free-Temperature/dp/B09HSRGZRL?th=1"
+      }
+    ] 
+  }
+}
+
