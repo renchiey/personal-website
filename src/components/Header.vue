@@ -17,10 +17,10 @@
 </template>
 
 <script setup lang="ts">
-import terminalIcon from "../assets/terminal.svg?raw";
-import homeIcon from "../assets/home.svg?raw";
-import bookIcon from "../assets/book.svg?raw";
-import hammerIcon from "../assets/hammer.svg?raw";
+import terminalIcon from "../assets/icons/terminal.svg?raw";
+import homeIcon from "../assets/icons/home.svg?raw";
+import bookIcon from "../assets/icons/book.svg?raw";
+import hammerIcon from "../assets/icons/hammer.svg?raw";
 import { onMounted, ref } from "vue";
 
 const path = ref("");

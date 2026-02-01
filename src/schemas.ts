@@ -15,7 +15,7 @@ export const projectSchema = z.object({
   repo: z.string().url().nullable(), // allow closed-source projects
   description: z.string(),
   techStack: z.array(z.string()),
-  thumbnail: z.string().url().nullable(),
+  thumbnail: z.string().nullable(),
 });
 
 export const happeningsSchema = z.object({

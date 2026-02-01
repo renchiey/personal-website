@@ -1,9 +1,13 @@
 ---
-const { src, alt, width, height } = Astro.props;
+const { src, alt, width, height, style } = Astro.props;
 ---
 
 <div>
-  <img style={`width: ${width}px; height: ${height}px;`} src={src} alt={alt} />
+  <img
+    style={`width: ${width}px; height: ${height}px; ${style}`}
+    src={src}
+    alt={alt}
+  />
 </div>
 
 <style>

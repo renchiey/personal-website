@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import CrtImage from "../components/CrtImage.astro";
-import myImage from "../assets/me.jpg";
+import myImage from "../assets/images/me.jpg";
 import { getCollection } from "astro:content";
 
 const date = new Date();
@@ -44,6 +44,16 @@ Some things to know about me is that I'm currently working as a freelance softwa
     </div>
   </section>
   <hr />
+  <section class="contact-section">
+    <h2>Contact Me</h2>
+    <p>
+      I do freelance work on the side, so feel free to contact me about that.
+      Otherwise, feel free to say hi to me too!
+    </p>
+    <ul>
+      <li><span>Email:</span> renchieyang@gmail.com</li>
+    </ul>
+  </section>
   <section class="happenings-section">
     <h2>What I'm Doing Now 🥸</h2>
     <p>Last updated: {updateDate}</p>
@@ -52,68 +62,72 @@ Some things to know about me is that I'm currently working as a freelance softwa
     </ul>
   </section>
   <section class="tools-section">
-    <h2>Tools 🪛</h2>
-    <h3>Software</h3>
-    <p>
-      This website is hosted on <a href="https://www.netlify.com/">Netlify</a> and
-      built using <a href="https://astro.build/">Astro</a> and <a
-        href="https://vuejs.org/">Vue</a
-      >
-    </p>
-    <ul class="tools">
-      {
-        softwareTools.map((tool) => (
-          <li>
-            {tool.data.type}:{" "}
-            <a class="tool" target="_blank" href={tool.data.href}>
-              {tool.data.label}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-    <h3>Hardware</h3>
-    <ul>
-      {
-        hardwareTools.map((tool) => (
-          <li>
-            <strong>{tool.data.type}</strong>:{" "}
-            {tool.data.href ? (
-              <a
-                class="tool"
-                target="_blank"
-                rel="noopener noreferrer"
-                href={tool.data.href}
-              >
+    <div>
+      <h2>Tools 🪛</h2>
+      <h3>Software</h3>
+      <p>
+        This website is hosted on <a href="https://www.netlify.com/">Netlify</a> and
+        built using <a href="https://astro.build/">Astro</a> and <a
+          href="https://vuejs.org/">Vue</a
+        >
+      </p>
+      <ul class="tools">
+        {
+          softwareTools.map((tool) => (
+            <li>
+              {tool.data.type}:{" "}
+              <a class="tool" target="_blank" href={tool.data.href}>
                 {tool.data.label}
               </a>
-            ) : (
-              <span>{tool.data.label}</span>
-            )}
-            {tool.data.parts && (
-              <ul>
-                {tool.data.parts.map((part) => (
-                  <li>
-                    <strong>{part.component}:</strong>{" "}
-                    {part.href ? (
-                      <a
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href={part.href}
-                      >
-                        {part.label}
-                      </a>
-                    ) : (
-                      <span>{part.label}</span>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </li>
-        ))
-      }
-    </ul>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div>
+      <h3>Hardware</h3>
+      <ul>
+        {
+          hardwareTools.map((tool) => (
+            <li>
+              <strong>{tool.data.type}</strong>:{" "}
+              {tool.data.href ? (
+                <a
+                  class="tool"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={tool.data.href}
+                >
+                  {tool.data.label}
+                </a>
+              ) : (
+                <span>{tool.data.label}</span>
+              )}
+              {tool.data.parts && (
+                <ul>
+                  {tool.data.parts.map((part) => (
+                    <li>
+                      <strong>{part.component}:</strong>{" "}
+                      {part.href ? (
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href={part.href}
+                        >
+                          {part.label}
+                        </a>
+                      ) : (
+                        <span>{part.label}</span>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
   </section>
 </Layout>
 
@@ -173,6 +187,9 @@ Some things to know about me is that I'm currently working as a freelance softwa
 
   .tools-section {
     margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     margin-bottom: 40px;
   }
 

@@ -1,0 +1,54 @@
+---
+const { thumbnail, title, description, link, repo, techStack } = Astro.props;
+import CrtImage from "./CrtImage.astro";
+---
+
+<div>
+  <CrtImage
+    src={thumbnail}
+    alt="Project thumbnail"
+    width="250"
+    height="170"
+    style={"border-radius: 8px"}
+  />
+  <div class="project-info">
+    <h4>{title}</h4>
+    <p>{description}</p>
+    <div class="project-footer">{repo && <a href={repo}>Source</a>}</div>
+  </div>
+</div>
+
+<style>
+  h4 {
+    margin-top: 3px;
+  }
+
+  p {
+    margin-top: -10px;
+  }
+
+  img {
+    object-fit: fill;
+  }
+
+  div {
+    width: 250px;
+  }
+
+  .project-footer,
+  p {
+    font-size: 0.85em;
+  }
+
+  a {
+    text-decoration: none;
+    color: white;
+    border: 1px solid white;
+    border-radius: 3px;
+    padding: 2px 5px;
+  }
+
+  a:hover {
+    opacity: 70%;
+  }
+</style>

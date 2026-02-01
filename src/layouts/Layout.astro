@@ -10,7 +10,7 @@ const pageTitle = title ? `${title} - renchieyang.com` : "renchieyang.com";
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width" initial-scale="1" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
     <title>{pageTitle}</title>
@@ -47,6 +47,8 @@ const pageTitle = title ? `${title} - renchieyang.com` : "renchieyang.com";
   hr {
     width: 100%;
     max-width: 960px;
+    border: none;
+    border-top: 4px solid white;
   }
 </style>
 

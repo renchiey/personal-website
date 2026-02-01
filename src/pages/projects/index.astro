@@ -1,5 +1,59 @@
 ---
+import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
+import Project from "../../components/Project.astro";
+
+const projects = await getCollection("projects");
 ---
 
-<Layout title="Projects" />
+<Layout title="Projects">
+  <h1>My Personal Projects</h1>
+  <hr />
+  <div class="projects-container">
+    {
+      projects.map((p) => (
+        <Project
+          title={p.data.title}
+          thumbnail={p.data.thumbnail}
+          description={p.data.description}
+          repo={p.data.repo}
+        />
+      ))
+    }
+  </div>
+</Layout>
+
+<style>
+  h1 {
+    text-align: center;
+  }
+
+  hr {
+    border: none;
+    border-top: 5px solid white;
+  }
+
+  .projects-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 5rem;
+
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+
+  /* tablet */
+  @media (max-width: 1024px) {
+    .projects-container {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* mobile */
+  @media (max-width: 640px) {
+    .projects-container {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
