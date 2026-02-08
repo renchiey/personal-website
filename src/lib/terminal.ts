@@ -229,6 +229,12 @@ export function useTerminal() {
 
     pushHistory({ path: path.value, text: raw });
 
+    if (raw.length > 0) {
+      commandHistory.value.push(raw);
+
+      commandHistoryPointer.value = commandHistory.value.length;
+    }
+
     if (!cmd) {
       resetInput();
       return;
@@ -296,6 +302,10 @@ export function useTerminal() {
   function resetInput() {
     input.value = "";
     caretPosition.value = 0;
+  }
+
+  function autoComplete() {
+    const partialInput = input.value;
   }
 
   function onKeydown(event: KeyboardEvent) {
