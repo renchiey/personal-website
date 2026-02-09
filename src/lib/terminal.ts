@@ -62,12 +62,12 @@ export function useTerminal() {
     },
 
     clear: {
-      help: "\tUsage: clear\n\n\tDescription: Clears the terminal buffer",
+      help: "\tUsage: clear\n\n\tDescription: Clears the terminal screen",
       method: (args) => {
         if (args.length > 1) {
           pushHistory({
             path: path.value,
-            text: "Usage: clear\n\nDescription: Clears the terminal buffer\n",
+            text: "Usage: clear\n\nDescription: Clears the terminal screen\n",
           });
         } else {
           history.value = [];
@@ -75,8 +75,9 @@ export function useTerminal() {
       },
     },
     cd: {
-      help: "\tUsage: cd <directory>\n\n\tDescription: Change directory",
+      help: "\tUsage: cd [PATH]\n\n\tDescription: Change directory",
       method: ([, target]) => {
+        if (!target) return;
         try {
           cwd.value = fs.changeDirectory(target);
         } catch {
@@ -88,13 +89,13 @@ export function useTerminal() {
       },
     },
     ls: {
-      help: "\tUsage: ls [path]\n\n\tDescription: List directory contents",
-      method: () => {
-        const entries = fs.listFiles().join("  ");
+      help: "\tUsage: ls [OPTIONAL PATH]\n\n\tDescription: List directory contents",
+      method: ([, target]) => {
+        const entries = fs.listFiles(target).join("  ");
 
         pushHistory({
           path: "",
-          text: entries + "\n",
+          text: entries.length > 0 ? entries + "\n" : "",
         });
       },
     },

@@ -216,8 +216,10 @@ Some things to know about me is that I'm currently working as a freelance softwa
 
 <script>
   function typeText(el: any, speed: number) {
-    const text = el.dataset.text;
+    const text = el?.dataset.text;
     let i = 0;
+
+    if (!text) return;
 
     function step() {
       if (i < text.length) {
