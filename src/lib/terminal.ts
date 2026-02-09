@@ -1,4 +1,5 @@
 import { computed, ref } from "vue";
+import { WebsiteFileSystem } from "./filesystem";
 
 interface TerminalLine {
   path: string;
@@ -10,21 +11,25 @@ interface Command {
   method: (args: string[]) => void;
 }
 
-type NodeType = "dir" | "exec";
-
-interface FSNode {
-  type: NodeType;
-  children?: Record<string, FSNode>;
-  run?: () => string;
-}
-
 export type CommandsMap = Record<string, Command>;
+
+function initFilesystem() {
+  const fs = new WebsiteFileSystem();
+
+  fs.makeDirectory("about");
+  fs.makeDirectory("projects");
+  fs.makeDirectory("bookshelf");
+
+  return fs;
+}
 
 export function useTerminal() {
   const initialPrompt =
     "Hello! Welcome to my interactive terminal :D \n\n" +
     "You can mess around here or learn more about me by running commands in the command line!\n\n" +
     "You can start by entering 'help' into the command line\n";
+
+  const fs = initFilesystem();
 
   const input = ref("");
   const caretPosition = ref(0);
@@ -33,66 +38,13 @@ export function useTerminal() {
 
   const commandHistory = ref<string[]>([]);
   const commandHistoryPointer = ref(0);
+  const cwd = ref<string>(fs.currentLocation);
 
-  const path = computed(() => `Guest@RenchieSite:${cwdString()} ❯`);
+  const path = computed(() => `Guest@RenchieSite:${cwd.value} ❯`);
 
   function pushHistory(line: TerminalLine) {
     history.value.push(line);
     onOutput?.();
-  }
-
-  const fs: FSNode = {
-    type: "dir",
-    children: {
-      "about-me": {
-        type: "dir",
-        children: {
-          about: {
-            type: "exec",
-            run: () =>
-              "Hi! I'm Renchie — a software engineer who likes building cool things.\n",
-          },
-        },
-      },
-
-      projects: {
-        type: "dir",
-        children: {
-          projects: {
-            type: "exec",
-            run: () => "Projects:\n- Journly\n- DropZoneAU\n- Personal Site\n",
-          },
-        },
-      },
-
-      bookshelf: {
-        type: "dir",
-        children: {
-          bookshelf: {
-            type: "exec",
-            run: () =>
-              "Bookshelf:\n- Designing Data-Intensive Applications\n- Clean Architecture\n",
-          },
-        },
-      },
-    },
-  };
-
-  const cwd = ref<string[]>([]);
-
-  function resolvePath(path: string[]): FSNode | null {
-    let node: FSNode = fs;
-
-    for (const part of path) {
-      if (!node.children || !node.children[part]) return null;
-      node = node.children[part];
-    }
-
-    return node;
-  }
-
-  function cwdString() {
-    return "/" + cwd.value.join("/");
   }
 
   const commands: CommandsMap = {
@@ -125,52 +77,25 @@ export function useTerminal() {
     cd: {
       help: "\tUsage: cd <directory>\n\n\tDescription: Change directory",
       method: ([, target]) => {
-        if (!target || target === "~") {
-          cwd.value = [];
-          return;
-        }
-
-        if (target === "..") {
-          cwd.value.pop();
-          return;
-        }
-
-        const next = [...cwd.value, target];
-        const node = resolvePath(next);
-
-        if (!node) {
+        try {
+          cwd.value = fs.changeDirectory(target);
+        } catch {
           pushHistory({
             path: "",
-            text: `cd: no such file or directory: ${target}\n`,
+            text: `cd: no such directory: ${target}\n`,
           });
-          return;
         }
-
-        if (node.type !== "dir") {
-          pushHistory({
-            path: "",
-            text: `cd: not a directory: ${target}\n`,
-          });
-          return;
-        }
-
-        cwd.value = next;
       },
     },
     ls: {
       help: "\tUsage: ls [path]\n\n\tDescription: List directory contents",
-      method: ([, target]) => {
-        if (!target || target === ".") {
-          listDir(cwd.value);
-          return;
-        }
+      method: () => {
+        const entries = fs.listFiles().join("  ");
 
-        if (target === "..") {
-          listDir(cwd.value.slice(0, -1));
-          return;
-        }
-
-        listDir([...cwd.value, target]);
+        pushHistory({
+          path: "",
+          text: entries + "\n",
+        });
       },
     },
   };
@@ -240,18 +165,6 @@ export function useTerminal() {
       return;
     }
 
-    // Try filesystem execution first
-    const node = resolvePath([...cwd.value, cmd]);
-
-    if (node?.type === "exec") {
-      pushHistory({
-        path: "",
-        text: node.run?.() ?? "",
-      });
-      resetInput();
-      return;
-    }
-
     // Fallback to built-in commands
     const command = commands[cmd];
     if (command) {
@@ -266,46 +179,9 @@ export function useTerminal() {
     resetInput();
   }
 
-  function listDir(path: string[]) {
-    const node = resolvePath(path);
-
-    if (!node) {
-      pushHistory({
-        path: "",
-        text: "ls: cannot access: No such file or directory\n",
-      });
-      return;
-    }
-
-    if (node.type !== "dir" || !node.children) {
-      pushHistory({
-        path: "",
-        text: "ls: not a directory\n",
-      });
-      return;
-    }
-
-    const entries = Object.entries(node.children)
-      .map(([name, child]) => {
-        if (child.type === "dir") return `${name}/`;
-        if (child.type === "exec") return `${name}*`;
-        return name;
-      })
-      .join("  ");
-
-    pushHistory({
-      path: "",
-      text: entries + "\n",
-    });
-  }
-
   function resetInput() {
     input.value = "";
     caretPosition.value = 0;
-  }
-
-  function autoComplete() {
-    const partialInput = input.value;
   }
 
   function onKeydown(event: KeyboardEvent) {
