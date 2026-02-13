@@ -1,5 +1,6 @@
 import { computed, ref } from "vue";
-import { WebsiteFileSystem } from "./filesystem";
+import { FileSystemError, WebsiteFileSystem } from "./filesystem";
+import { getAbout } from "./executables";
 
 interface TerminalLine {
   path: string;
@@ -80,11 +81,24 @@ export function useTerminal() {
         if (!target) return;
         try {
           cwd.value = fs.changeDirectory(target);
-        } catch {
-          pushHistory({
-            path: "",
-            text: `cd: no such directory: ${target}\n`,
-          });
+        } catch (e: any) {
+          if (e instanceof FileSystemError) {
+            switch (e.errorType) {
+              case "NoPermission":
+                pushHistory({
+                  path: "",
+                  text: `cd: ${e.message}\n`,
+                });
+                break;
+
+              case "DirectoryDoesNotExist":
+                pushHistory({
+                  path: "",
+                  text: `cd: no such directory: ${target}\n`,
+                });
+                break;
+            }
+          }
         }
       },
     },
@@ -97,6 +111,12 @@ export function useTerminal() {
           path: "",
           text: entries.length > 0 ? entries + "\n" : "",
         });
+      },
+    },
+    about: {
+      help: "\tUsage: about\n\n\tDescription: Gets about me information",
+      method: () => {
+        getAbout();
       },
     },
   };

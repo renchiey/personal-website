@@ -2,6 +2,28 @@
  * This is a basic file system emulation implementation for my interactive terminal
  */
 
+export type FileSystemErrorType = "NoPermission" | "DirectoryDoesNotExist";
+
+export class FileSystemError extends Error {
+  errorType: FileSystemErrorType;
+
+  constructor(message: string, errorType: FileSystemErrorType) {
+    super(message);
+    this.name = "FileSystemError";
+    this.errorType = errorType;
+  }
+}
+
+const DirectoryDoesNotExistError = new FileSystemError(
+  "",
+  "DirectoryDoesNotExist",
+);
+
+const NoPermissionError = new FileSystemError(
+  "You do not have permission for this",
+  "NoPermission",
+);
+
 type FileType = "directory" | "executable";
 
 interface FSNode {
@@ -34,13 +56,19 @@ export class WebsiteFileSystem {
     from: string = this.currentLocation,
   ): string {
     const raw = input.trim();
-    if (!raw) throw SyntaxError;
+    if (!raw) throw DirectoryDoesNotExistError;
+    if (raw.startsWith("/")) throw NoPermissionError;
 
-    const segments = raw.split("/");
+    let segments = raw.split("/");
     let cwd = from;
 
+    if (raw.startsWith("~")) {
+      cwd = "~";
+      segments = segments.slice(1);
+    }
+
     for (const part of segments) {
-      if (!(cwd in this.index)) throw ReferenceError;
+      if (!(cwd in this.index)) throw DirectoryDoesNotExistError;
 
       const node = this.index[cwd];
 
@@ -49,7 +77,7 @@ export class WebsiteFileSystem {
       }
 
       if (part === "..") {
-        if (!node.parent) throw ReferenceError;
+        if (!node.parent) throw NoPermissionError;
         cwd = node.parent;
         continue;
       }
@@ -58,7 +86,7 @@ export class WebsiteFileSystem {
         if (cwd === "~") cwd += "/";
         cwd += `${part}/`;
       } else {
-        throw ReferenceError;
+        throw DirectoryDoesNotExistError;
       }
     }
 
@@ -78,7 +106,7 @@ export class WebsiteFileSystem {
 
   makeDirectory(path: string) {
     path = path.trim();
-    if (!path) throw SyntaxError;
+    if (!path) throw DirectoryDoesNotExistError;
 
     const parts = path.split("/").filter(Boolean);
 
