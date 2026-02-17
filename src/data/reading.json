@@ -1,6 +1,6 @@
 
 {
-  "completed": [
+  "completedBooks": [
     {
       "id": "fire-punch",
       "title": "Fire Punch",
@@ -58,7 +58,7 @@
       "rating": 4.2
     }
   ],
-  "inProgress": [
+  "inProgressBooks": [
     {
       "id": "dune",
       "title": "Dune",
@@ -72,7 +72,7 @@
       "coverImgSrc": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThzifh_EQw29erVGDIiA0gBCkgioJFBtjUQw&s"
     }
   ],
-  "notCompleted": [ 
+  "notCompletedBooks": [
     {
       "id": "love-for-imperfect-things",
       "title": "Love for Imperfect Things",

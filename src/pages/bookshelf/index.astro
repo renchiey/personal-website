@@ -4,9 +4,9 @@ import Book from "../../components/Book.astro";
 
 import { getCollection } from "astro:content";
 
-const completed = await getCollection("completed");
-const inProgress = await getCollection("inProgress");
-const notCompleted = await getCollection("notCompleted");
+const completed = await getCollection("completedBooks");
+const inProgress = await getCollection("inProgressBooks");
+const notCompleted = await getCollection("notCompletedBooks");
 
 // 😁 - for some reason the file encoding type will change from utf-8 without an emoji (which will prevent emojis from being rendered properly)
 ---
@@ -57,11 +57,10 @@ const notCompleted = await getCollection("notCompleted");
         </div>
       </div>
     </div>
-    <div class="reading-section">
-      <h2 id="not-completed-title">Did Not Finish</h2>
-
-      {notCompleted.length === 0 && <p>No books yet.</p>}
-
+    {
+    notCompleted.length !== 0 &&
+    (<div class="reading-section">
+      <h2 id="not-completed-title">Could Not Finish</h2>
       <div class="books-container">
         {
           notCompleted.map((book) => (
@@ -76,12 +75,14 @@ const notCompleted = await getCollection("notCompleted");
         }
       </div>
     </div>
+    )
+    }
   </section>
 </Layout>
 <style>
   #in-progress-title {
     color: rgba(252, 186, 3);
-    text-shadow: 
+    text-shadow:
       0 0 4px rgba(252, 186, 3,0.8);
       0 0 12px rgba(252, 186, 3, 0.5)
   }

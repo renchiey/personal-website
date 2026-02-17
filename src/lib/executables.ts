@@ -1,5 +1,5 @@
 export async function getAbout() {
-  const output = `\n 
+  const output = `\n
   About me:
 
   his is my personal website where you can find all things related to
@@ -8,6 +8,16 @@ export async function getAbout() {
           as a freelance software engineer, I love playing/doing all kinds of
           sports (my favourite being Snowboarding), and I have an expensive
           camera that I occassionaly use to shoot videos with :D
+
+  `;
+}
+
+export async function getPersonal() {
+  const r = await fetch(`${import.meta.env.BASE_URL}/personal.json`);
+
+  const data = await r.json();
+
+  const output = `\n
 
   `;
 }

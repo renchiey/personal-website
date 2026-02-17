@@ -8,23 +8,23 @@ import {
   softwareToolSchema,
 } from "./schemas";
 
-const completed = defineCollection({
+const completedBooks = defineCollection({
   loader: file("src/data/reading.json", {
-    parser: (text) => JSON.parse(text).completed,
+    parser: (text) => JSON.parse(text).completedBooks,
   }),
   schema: bookSchema,
 });
 
-const inProgress = defineCollection({
+const inProgressBooks = defineCollection({
   loader: file("src/data/reading.json", {
-    parser: (text) => JSON.parse(text).inProgress,
+    parser: (text) => JSON.parse(text).inProgressBooks,
   }),
   schema: bookSchema,
 });
 
-const notCompleted = defineCollection({
+const notCompletedBooks = defineCollection({
   loader: file("src/data/reading.json", {
-    parser: (text) => JSON.parse(text).notCompleted,
+    parser: (text) => JSON.parse(text).notcompletedBooks,
   }),
   schema: bookSchema,
 });
@@ -58,10 +58,10 @@ const happenings = defineCollection({
 });
 
 export const collections = {
-  completed,
-  inProgress,
+  completedBooks,
+  inProgressBooks,
   projects,
-  notCompleted,
+  notCompletedBooks,
   softwareTools,
   hardwareTools,
   happenings,
