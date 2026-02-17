@@ -41,11 +41,6 @@ function isActive(href: string) {
 
 const navLinks = [
   {
-    label: "Terminal",
-    href: "/terminal",
-    icon: terminalIcon,
-  },
-  {
     label: "Home",
     href: "/",
     icon: homeIcon,

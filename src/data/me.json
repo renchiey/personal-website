@@ -5,10 +5,6 @@
       "happening": "Learning how to play the guitar"
     },
     {
-      "id": 2,
-      "happening": "Playing modded Minecraft"
-    },
-    {
       "id": 3,
       "happening": "Leetcoding"
     },
@@ -69,8 +65,8 @@
             "label": "Asus 750W ROG Loki SFX-L Platinum PSU",
             "href": "https://www.amazon.com.au/ASUS-Platinum-Modular-Certified-Compatible/dp/B0BHJB4VG7?th=1"
           }
-        ] 
-      }, 
+        ]
+      },
       {
         "id": 3,
         "type": "Homelab",
@@ -88,7 +84,7 @@
         "type": "Camera",
         "label": "Sony Alpha ZV-E1 Full-Frame",
         "href": "https://www.amazon.com.au/Sony-Full-Frame-Interchangeable-Mirrorless-Camera/dp/B0BZWNWCZ9?th=1"
-      },  
+      },
       {
         "id": 6,
         "type": "Mouse",
@@ -101,7 +97,7 @@
         "label": "Kobo Libra 2",
         "href": "https://www.amazon.com.au/Kobo-Waterproof-Touchscreen-Glare-Free-Temperature/dp/B09HSRGZRL?th=1"
       }
-    ] 
+    ]
   }
 }
 
